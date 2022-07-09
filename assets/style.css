@@ -1,34 +1,75 @@
+:root {
+    --main-bg: #1C3240;
+    --dark-bg: #072026;
+    --medium-bg: #59343B;
+    --light-bg: #8C494F;
+    --accent-bg: #8C6565;
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-html,
-body,
-.wrapper {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+body {
+background-image: url("images/wheat.png");
 }
 
 .wrapper {
-    padding-top: 30px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 30px;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--main-bg);
   }
   
-  header {
-    text-align: center;
-    padding: 20px;
-    padding-top: 0px;
-    color: hsl(206, 17%, 28%);
-  }
+.quiz {
+    display: grid;
+    grid-template-areas: 
+    "title"
+    "scoreboard"
+    "timer"
+    "question"
+    "answers";
+}
 
-  nav ul li {
-    list-style: none;
-  }
+@media screen and (min-width: 500px) {
+    .quiz {
+        display: grid;
+        grid-template-areas: 
+        "title scoreboard timer"
+        "question question question"
+        "answers answers answers";
+    } 
+}
 
-  nav ul li a {
-    text-decoration: none;
-  }
+.title {
+    grid-area: title;
+    background-color: var(--light-bg);
+}
+
+.scoreboard {
+    grid-area: scoreboard;
+    background-color: var(--medium-bg);
+}
+
+.timer {
+    grid-area: timer;
+    background-color: var(--light-bg);
+}
+
+.question {
+    grid-area: question;
+    background-color: var(--main-bg);
+}
+
+.answers {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 10px;
+    width: 100%;
+    grid-area: answers;
+    background-color: var(--light-bg);
+}
