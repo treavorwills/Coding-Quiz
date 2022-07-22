@@ -1,34 +1,19 @@
 var body = document.body;
 var j = 0;
 localStorage.setItem("localQuestionIndex", j);
-
-var quizQuestion = [
-	{
-		question: 'What is your favorite Star Wars quote',
-		answers: {
-			a: 'Hello there',
-			b: 'General Kenobi!',
-			c: 'May the force be with you.',
-			d: 'I\'ve got a bad feeling about this!',
-		},
-		correctAnswer: 'b'
-	},
-	{
-		question: 'And what is this correct answer?',
-		answers: {
-			a: 'this is the correct answer',
-			b: 'this is not correct',
-			c: 'this is not correct2',
-			d: 'this is not correct3',
-		},
-		correctAnswer: 'a'
-	}
-];
+var points = 0;
+localStorage.setItem("localPoints", points);
 
 var quizQuestionsArray = [
-    ["poop", "pee", "fart", "burp", "hiccup", "hiccup"],
-    ["one", "two", "three", "four", "five", "two"],
-    ["What is your favorite Star Wars Quote?", "Hello there!", "I've got a bad feeling about this!", "I love you!", "I know", "Any"]
+    ["What is your favorite Star Wars Quote?", "Hello there!", "I've got a bad feeling about this!", "GENERAL KENOBI!", "May the force be with you", "Any"],
+    ["Inside which HTML element do we put the JavaScript?", "<js>", "<scripting>", "<script>", "<javascript>", "<script>"],
+    ["What is the correct JavaScript syntax to change the content of the following HTML element: <p id=\"demo\">This is a demonstration.</p>","document.getElement(\"p\").innerHTML = \"Hello World!\";","#demo.innerHTML=\"Hello World!\";","document.getElementById(\"demo\").innerHTML=\"Hello World!\";","document.getElementByName(\"p\").innerHTML=\"Hello World!\";","document.getElementById(\"demo\").innerHTML=\"Hello World!\";"],
+    ["Where is the correct place to insert a JavaScript?","The <body> section","The <head> section","Both the <head> section and the <body> section are correct","In the <nav> section","The <body> section"],
+    ["What is the correct syntax for referring to an external script called \"xxx.js\"?","<script src=\"xxx.js\">","<script name=\"xxx.js\">","<script href=\"xxx.js\">","<script nav=\"xxx.js\">","<script src=\"xxx.js\">"],
+    ["","","","","",""],
+    ["","","","","",""],
+    ["","","","","",""],
+    ["","","","","",""],
 ];
 
 
@@ -112,11 +97,6 @@ function playGame() {
     option3.addEventListener("click", getAnswer);
     option4.addEventListener("click", getAnswer);
     quizAnswersDiv.addEventListener("click", displayNextQuestion);
-
-        // ADD event listener for the answers div section
-        // SET the user's specific button answer equal to an answer variable
-        // Pass the user's answer variable into correctAnswer FUCNTION to evaluate if it's true
-        questionIndex++;
 };
 
 function displayNextQuestion() {
@@ -133,18 +113,20 @@ function displayQuiz(i) {
     option2.textContent = quizQuestionsArray[i][2];
     option3.textContent = quizQuestionsArray[i][3];
     option4.textContent = quizQuestionsArray[i][4];
+    console.log("Question index from displayQuiz: " + i);
 };
 
 function getQuestion (questionCount) {
     return questionCount++;
 };
 
-function getAnswer (i) {
-    console.log("I don't effin know " + this);
+function getAnswer (questionIndex) {
+    var i = localStorage.getItem("localQuestionIndex");
+    if (this.textContent === quizQuestionsArray[i][5] || quizQuestionsArray[i][5] === "Any") {
+        console.log("Correct!");
+        var newPoints = localStorage.getItem("localPoints");
+        localStorage.setItem("localPoints", ++newPoints);
+    }
+        else console.log("Inncorrect!");
+    console.log(localStorage.getItem("localPoints"));
 };
-
-// function correctAnswer(selection, i) {
-//     if (selection.textContent === quizQuestionsArray[i][4]) {
-//         return true;
-//     } else return false;
-// }
