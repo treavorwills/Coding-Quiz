@@ -3,6 +3,10 @@ var j = 0;
 localStorage.setItem("localQuestionIndex", j);
 var points = 0;
 localStorage.setItem("localPoints", points);
+var timer = 1;
+localStorage.setItem("localTimer", timer);
+var scores = [0];
+localStorage.setItem("localScores", JSON.stringify(scores));
 
 var quizQuestionsArray = [
     ["What is your favorite Star Wars Quote?", "Hello there!", "I've got a bad feeling about this!", "GENERAL KENOBI!", "May the force be with you", "Any"],
@@ -39,6 +43,25 @@ var option2 = document.createElement("button");
 var option3 = document.createElement("button");
 var option4 = document.createElement("button");
 
+// create the form elements
+var initialsForm = document.createElement("form");
+var initialsFormText = document.createElement("input");
+var initialsFormSubmit = document.createElement("input");
+var initialsFormLabel = document.createElement("label");
+
+// add types, IDs and Labels to the form elements
+initialsFormText.type = "text";
+initialsFormSubmit.type = "submit";
+initialsFormText.id = "fInitials";
+initialsFormLabel.setAttribute("for", "fInitials");
+initialsFormLabel.innerText = "Initials: ";
+initialsFormSubmit.addEventListener("click", saveScore);
+
+// append the form together
+initialsForm.appendChild(initialsFormLabel);
+initialsForm.appendChild(initialsFormText);
+initialsForm.appendChild(initialsFormSubmit);
+
 // add classes to the quiz elements
 quizDiv.className = "quiz";
 quizTimerDiv.className = "timer";
@@ -57,7 +80,7 @@ quizAnswersDiv.append(option4);
 quizTimerDiv.appendChild(quizTimerP);
 
 titleH1.textContent = "JavaScript Coding Quiz";
-titleP.textContent = "Select Begin to test your knowledge Java Script. For every question you answer incorrectly, time is deducted from the timer. Answer correctly to earn points and enter your initials at the end!";
+titleP.textContent = "Test your knowledge in Java Script and get a high score! Don't guess, if you answer inncorrectly you will lose time!";
 
 titleDiv.className = "question";
 beginButton.className = "answers";
@@ -79,15 +102,17 @@ function playGame() {
     // add the first quiz question
     containerDiv.appendChild(quizDiv);
 
-    var secondsLeft = 30;
+    var secondsLeft = localStorage.getItem("localTimer");
     var questionIndex = localStorage.getItem("localQuestionIndex");
     var timerInterval = setInterval(function() {
-        quizTimerP.textContent = secondsLeft + " seconds left!";
-        secondsLeft--;
-        if(secondsLeft === 0) {
+        // quizTimerP.textContent = secondsLeft + " seconds left!";
+        // secondsLeft--;
+        quizTimerP.textContent = localStorage.getItem("localTimer") + " seconds left!";
+        localStorage.setItem("localTimer", --secondsLeft);
+        if(localStorage.getItem("localTimer") == 0) {
             // Stops execution of action at set interval
             clearInterval(timerInterval);
-            quizTimerP.textContent = "Times up!";
+            quizEnd();
         }
     }, 1000);
 
@@ -130,3 +155,28 @@ function getAnswer (questionIndex) {
         else console.log("Inncorrect!");
     console.log(localStorage.getItem("localPoints"));
 };
+
+function quizEnd() {
+    quizTimerP.textContent = "Times up!";
+    quizQuestionP.textContent = "Nice work! Enter your initials to save your score."
+    quizDiv.removeChild(quizAnswersDiv);
+    quizDiv.appendChild(initialsForm);
+}
+
+function saveScore() {
+   event.preventDefault();
+    var init = document.getElementById("fInitials").value;
+    console.log(init);
+    var playerScore = [
+        {
+        player:init,
+        highScore: localStorage.getItem("localPoints")
+        }
+    ];
+    var tempScores = JSON.parse(localStorage.getItem("localScores"));
+    tempScores.push(playerScore);
+    localStorage.setItem("localScores", JSON.stringify(tempScores));
+    let poop = JSON.parse(localStorage.getItem("localScores"));
+    console.log(poop);
+}
+

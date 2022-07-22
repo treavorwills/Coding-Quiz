@@ -65,3 +65,13 @@ button {
     background-color: var(--main-bg);
     color: var(--accent-bg);
 }
+
+input {
+    width: 80px;
+}
+
+label {
+    color:var(--dark-bg);
+    background-color: var(--light-bg);
+    width: 80px;
+}
