@@ -3,7 +3,7 @@ var j = 0;
 localStorage.setItem("localQuestionIndex", j);
 var points = 0;
 localStorage.setItem("localPoints", points);
-var timer = 2;
+var timer = 15;
 localStorage.setItem("localTimer", timer);
 var scores = [0];
 localStorage.setItem("localScores", JSON.stringify(scores));
