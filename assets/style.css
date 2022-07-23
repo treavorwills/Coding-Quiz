@@ -75,3 +75,9 @@ label {
     background-color: var(--light-bg);
     width: 80px;
 }
+
+table {
+    background-color: var(--light-bg);
+    color: var(--dark-bg);
+    width:100%
+}
